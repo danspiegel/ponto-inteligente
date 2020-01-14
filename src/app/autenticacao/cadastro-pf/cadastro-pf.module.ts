@@ -14,19 +14,19 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 
-import { CadastrarPjComponent, CadastroPjComponent } from './components';
-import { CadastrarPjService } from './services';
-import { SharedModule } from '../../shared/shared.module';
+import { CadastrarPfComponent, CadastroPfComponent } from './components';
+
+
 
 @NgModule({
   declarations: [
-    CadastrarPjComponent,
-    CadastroPjComponent
+    CadastrarPfComponent, 
+    CadastroPfComponent
   ],
   imports: [
     CommonModule,
-    FlexLayoutModule,
     RouterModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
@@ -34,11 +34,7 @@ import { SharedModule } from '../../shared/shared.module';
     MatListModule,
     MatTooltipModule,
     MatIconModule,
-    MatSnackBarModule,
-    SharedModule
-  ],
-  providers: [
-    CadastrarPjService
+    MatSnackBarModule
   ]
 })
-export class CadastroPjModule { }
+export class CadastroPfModule { }
