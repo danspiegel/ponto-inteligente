@@ -15,6 +15,7 @@ import {
 } from '@angular/material';
 
 import { CadastrarPfComponent, CadastroPfComponent } from './components';
+import { CadastrarPfService } from './services';
 
 
 
@@ -35,6 +36,9 @@ import { CadastrarPfComponent, CadastroPfComponent } from './components';
     MatTooltipModule,
     MatIconModule,
     MatSnackBarModule
+  ],
+  providers: [
+    CadastrarPfService
   ]
 })
 export class CadastroPfModule { }

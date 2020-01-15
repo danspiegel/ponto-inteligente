@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,14 +45,12 @@ export class LoginComponent implements OnInit {
     this.loginService.logar(login)
       .subscribe(
         data => {
-          console.log(JSON.stringify(data));
           localStorage['token'] = data['data']['token'];
           const usuarioData = JSON.parse(atob(data['data']['token'].split('.')[1]));
-          console.log(JSON.stringify(usuarioData));
           if (usuarioData['role'] == 'ROLE_ADMIN') {
-            alert('Deve redirecionar para a página de admin.');
+            this.router.navigate(['/admin']);
           } else {
-            alert('Deve redirecionar para a página de funcionário.');
+            this.router.navigate(['/funcionario']);
           }
         },
         err => {
