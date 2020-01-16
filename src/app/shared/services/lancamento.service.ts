@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment as env } from '../../../environments/environment';
+
+import { Lancamento } from '../models';
+import { HttpUtilService } from './http-util.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LancamentoService {
+
+  private readonly PATH: string = 'lancamentos';
+  private readonly PATH_ULTIMO_LANC: string = '/funcionario/{funcionarioId}/ultimo';
+  private readonly PATH_LANCAMENTOS: string = '/funcionario/{funcionarioId}';
+  private readonly PATH_TODOS_LANC: string = '/funcionario/{funcionarioId}/todos';
+
+  constructor(
+    private http: HttpClient,
+    private httpUtil: HttpUtilService
+  ) { }
+}
