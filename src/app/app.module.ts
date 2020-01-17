@@ -23,6 +23,11 @@ import {
   FuncionarioRoutingModule 
 } from './funcionario';
 
+import {
+  AdminModule,
+  AdminRoutingModule
+} from './admin';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -41,6 +46,8 @@ import {
     FlexLayoutModule,
     FuncionarioModule,
     FuncionarioRoutingModule,
+    AdminModule,
+    AdminRoutingModule,
     AppRoutingModule
   ],
   providers: [],
