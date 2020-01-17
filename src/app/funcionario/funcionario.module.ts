@@ -30,6 +30,8 @@ import {
   PtBrMatPaginatorIntl
 } from '../shared';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   declarations: [
     ListagemComponent, 
@@ -50,7 +52,8 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatCardModule
+    MatCardModule,
+    SharedModule
   ],
   providers: [
     HttpUtilService,
