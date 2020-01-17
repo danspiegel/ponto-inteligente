@@ -14,7 +14,8 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatCardModule
+  MatCardModule,
+  MatPaginatorIntl
 } from '@angular/material'
 
 import { 
@@ -25,7 +26,8 @@ import {
 
 import { 
   HttpUtilService,
-  LancamentoService
+  LancamentoService,
+  PtBrMatPaginatorIntl
 } from '../shared';
 
 @NgModule({
@@ -52,7 +54,8 @@ import {
   ],
   providers: [
     HttpUtilService,
-    LancamentoService
+    LancamentoService,
+    { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }
   ]
 })
 export class FuncionarioModule { }
