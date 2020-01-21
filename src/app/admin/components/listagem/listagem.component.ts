@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -18,7 +18,8 @@ import {
   Lancamento,
   Funcionario,
   Tipo,
-  HttpUtilService
+  HttpUtilService,
+  FuncionarioService
 } from '../../../shared';
 
 @Component({
@@ -29,9 +30,13 @@ import {
 export class ListagemComponent implements OnInit {
 
   dataSource: MatTableDataSource<Lancamento>;
-  colunas: string[] = ['data', 'tipo', 'localizacoa', 'acao'];
+  colunas: string[] = ['data', 'tipo', 'localizacao', 'acao'];
   funcionarioId: string;
   totalLancamentos: number;
+
+  funcionarios: Funcionario[];
+  @ViewChild(MatSelect, { static: true }) matSelect: MatSelect;
+  form: FormGroup;
 
   private pagina: number;
   private ordem: string;
@@ -41,13 +46,21 @@ export class ListagemComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private httpUtil: HttpUtilService,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private funcionarioService: FuncionarioService
   ) { }
 
   ngOnInit() {
     this.pagina = 0;
     this.ordemPadrao();
-    this.exibirLancamentos();
+    this.obterFuncionarios();
+    this.gerarForm();
+  }
+
+  gerarForm() {
+    this.form = this.fb.group({
+      funcs: ['', []]
+    });
   }
 
   ordemPadrao() {
@@ -55,8 +68,39 @@ export class ListagemComponent implements OnInit {
     this.direcao = 'DESC';
   }
 
+  get funcId(): string {
+    return sessionStorage['funcionarioId'] || false;
+  }
+
+  obterFuncionarios() {
+    this.funcionarioService.listarFuncionariosPorEmpresa()
+      .subscribe(
+        data => {
+          const usuarioId: string = this.httpUtil.obterIdUsuario();
+          this.funcionarios = (data.data as Funcionario[]).filter( func => func.id != usuarioId);
+
+          if (this.funcId) {
+            this.form.get('funcs').setValue(parseInt(this.funcId, 10));
+            this.exibirLancamentos();
+          }
+        },
+        err => {
+          const msg: string = "Erro ao obter funcionários.";
+          this.snackBar.open(msg, "Erro", { duration: 5000 });
+        }
+      );
+  }
+
   exibirLancamentos() {
-    this.funcionarioId = '2';
+    if (this.matSelect.selected) {
+      this.funcionarioId = this.matSelect.selected['value'];
+    } else if (this.funcId) {
+      this.funcionarioId = this.funcId;
+    } else {
+      return;
+    }
+
+    sessionStorage['funcionarioId'] = this.funcionarioId;
 
     this.lancamentoService.listarLancamentosPorFuncionario(
       this.funcionarioId, this.pagina, this.ordem, this.direcao)
