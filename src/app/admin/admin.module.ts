@@ -37,7 +37,8 @@ import {
   ListagemComponent, 
   CadastroComponent, 
   AtualizacaoComponent,
-  AdminComponent
+  AdminComponent,
+  ConfirmarDialog
 } from './components';
 
 @NgModule({
@@ -45,7 +46,8 @@ import {
     ListagemComponent, 
     CadastroComponent, 
     AtualizacaoComponent,
-    AdminComponent
+    AdminComponent,
+    ConfirmarDialog
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import {
     FuncionarioService,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }
-  ]
+  ],
+  entryComponents: [ ConfirmarDialog ]
 })
 export class AdminModule { }
